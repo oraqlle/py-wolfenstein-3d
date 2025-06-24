@@ -4,9 +4,13 @@ from camera import Camera
 
 
 class Player(Camera):
-    def __init__(self, app, position=cfg.PLAYER_POS, yaw=-90, pitch=0):
-        self.app = app
+    def __init__(self, eng, position=cfg.PLAYER_POS, yaw=-90, pitch=0):
+        self.app = eng.app
+        self.eng = eng
         super().__init__(position, yaw, pitch)
+
+    def handle_events(self, events):
+        pass
 
     def update(self):
         self.keyboard_control()

@@ -3,15 +3,15 @@ from meshes.base_mesh import BaseMesh
 
 
 class QuadMesh(BaseMesh):
-    def __init__(self, app):
+    def __init__(self, app, shader_program):
         super().__init__()
 
         self.app = app
         self.ctx = app.ctx
-        self.program = app.shader_program.quad
+        self.program = shader_program
 
-        self.vbo_format = '3f 3f'
-        self.attrs = ('in_position', 'in_colour')
+        self.vbo_format = '4f 2f'
+        self.attrs = ('in_position', 'in_uv')
         self.vao = self.get_vao()
 
     def get_vertex_data(self):
