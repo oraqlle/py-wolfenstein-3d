@@ -1,14 +1,22 @@
-# Wolfenstein 3D Clone
+# Pygame + ModernGL Quad Render
 
-This is a replica of Wolfenstein 3D in Pygame using OpenGL.
+Basic quad renderer setup using Pygame and ModernGL for porting into specific game or
+game engine.
 
-This project was written to assist in my understanding of game engines and computer
-graphics.
+## Building and Running
+
+To build and run the game you will need a Python installation and the `venv` module.
+
+```sh
+python -m venv .venv
+. .venv/bin/activate
+pip install -r requirements.txt
+python main.py
+```
 
 ## Source
 
-This engine was created following a [tutorial](https://www.youtube.com/watch?v=yJXuvK_eLrQ)
-from Coder Space. Documentation is based on the techniques demonstrated in the video, for
-my own record and for others further understanding. This project is licensed the same as
-the source created by the original author.
+This set up is based on the set up used in the tutorials by [Coder Space]()
+with some opinionated small QOL changes. As such, the code is licensed the same as the
+original projects this is from.
 
