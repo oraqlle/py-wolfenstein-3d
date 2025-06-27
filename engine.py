@@ -2,6 +2,7 @@ from shader_program import ShaderProgram
 from player import Player
 from scene import Scene
 from textures import Textures
+from level_map import LevelMap
 
 
 class Engine:
@@ -13,11 +14,15 @@ class Engine:
         self.player = None
         self.shader_program = None
         self.scene = None
+
+        self.level_map = None
+
         self.new_game()
 
     def new_game(self):
         self.player = Player(self)
         self.shader_program = ShaderProgram(self)
+        self.level_map = LevelMap(self)
         self.scene = Scene(self)
 
     def handle_events(self, event):

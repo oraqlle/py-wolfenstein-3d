@@ -1,4 +1,5 @@
 import moderngl as mgl
+import settings as cfg
 import glm
 
 
@@ -17,6 +18,7 @@ class ShaderProgram:
     def set_uniform_on_init(self):
         self.quad['m_proj'].write(self.player.m_proj)
         self.quad['m_model'].write(glm.mat4())
+        #self.level['u_texture_array_0'] = cfg.TEXTURE_UNIT_0
 
     def update(self):
         self.quad['m_view'].write(self.player.m_view)
