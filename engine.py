@@ -22,7 +22,7 @@ class Engine:
     def new_game(self):
         self.player = Player(self)
         self.shader_program = ShaderProgram(self)
-        self.level_map = LevelMap(self)
+        self.level_map = LevelMap(self, tmx_file='level_0.tmx')
         self.scene = Scene(self)
 
     def handle_events(self, event):
