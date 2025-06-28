@@ -31,5 +31,5 @@ class LevelMesh:
 
     def get_vertex_data(self):
         vertex_data = self.mesh_builder.build_mesh()
-        print(f'Num level vertices: {len(vertex_data) // 5 * 3}')
+        print(f'Num level vertices: {len(vertex_data) // 7 * 3}')
         return vertex_data

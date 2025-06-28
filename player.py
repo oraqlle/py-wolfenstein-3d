@@ -1,3 +1,4 @@
+import glm
 import pygame as pg
 import settings as cfg
 from camera import Camera
@@ -29,21 +30,28 @@ class Player(Camera):
     def keyboard_control(self):
         key_state = pg.key.get_pressed()
         velocity = cfg.PLAYER_SPEED * self.app.delta_time
+        next_step = glm.vec2()
 
         if key_state[pg.K_w]:
-            self.move_forward(velocity)
+            next_step = self.move_forward(velocity)
 
         if key_state[pg.K_a]:
-            self.move_left(velocity)
+            next_step = self.move_left(velocity)
 
         if key_state[pg.K_s]:
-            self.move_back(velocity)
+            next_step = self.move_back(velocity)
 
         if key_state[pg.K_d]:
-            self.move_right(velocity)
+            next_step = self.move_right(velocity)
 
         if key_state[pg.K_q]:
             self.move_up(velocity)
 
         if key_state[pg.K_e]:
             self.move_down(velocity)
+
+        self.move(next_step)
+
+    def move(self, next_step):
+        self.position.x += next_step[0]
+        self.position.z += next_step[1]

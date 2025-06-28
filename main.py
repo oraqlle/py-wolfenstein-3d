@@ -12,12 +12,11 @@ class Game:
         pg.display.gl_set_attribute(pg.GL_CONTEXT_MINOR_VERSION, cfg.MINOR_VER)
         pg.display.gl_set_attribute(pg.GL_CONTEXT_PROFILE_MASK, pg.GL_CONTEXT_PROFILE_CORE)
         pg.display.gl_set_attribute(pg.GL_DEPTH_SIZE, cfg.DEPTH_SIZE)
-        pg.display.gl_set_attribute(pg.GL_MULTISAMPLESAMPLES, cfg.NUM_SAMPLES)
 
         pg.display.set_mode(cfg.WIN_RES, flags=pg.OPENGL | pg.DOUBLEBUF)
         self.ctx = mgl.create_context()
 
-        self.ctx.enable(flags=mgl.DEPTH_TEST | mgl.CULL_FACE | mgl.BLEND)
+        self.ctx.enable(flags=mgl.DEPTH_TEST | mgl.BLEND)
         self.ctx.gc_mode = 'auto'
 
         self.clock = pg.time.Clock()

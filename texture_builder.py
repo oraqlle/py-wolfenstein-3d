@@ -47,7 +47,9 @@ class TextureArrayBuilder:
             texture = pg.image.load(path)
             texture_array.blit(texture, (0, i * tex_size))
             sprite_sheet.blit(
-                texture, ((i % size) * tex_size, (i // size) * tex_size))
+                texture,
+                ((i % size) * tex_size, (i // size) * tex_size)
+            )
 
         pg.image.save(sprite_sheet, sprite_sheet_path)
         pg.image.save(texture_array, texture_array_path)

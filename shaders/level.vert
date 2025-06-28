@@ -4,7 +4,8 @@ layout (location = 0) in vec3 in_position;
 layout (location = 1) in int in_tex_id;
 layout (location = 2) in int face_id;
 
-uniform mat4 m_proj, m_view;
+uniform mat4 m_proj;
+uniform mat4 m_view;
 
 flat out int tex_id;
 out vec2 uv;
