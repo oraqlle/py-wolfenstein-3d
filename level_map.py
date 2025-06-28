@@ -1,4 +1,6 @@
+import glm
 import pytmx
+import settings as cfg
 
 
 class LevelMap:
@@ -17,6 +19,15 @@ class LevelMap:
         return self.gid_map[gid] - 1
 
     def parse_level(self):
+        # player spawn location obj
+        player = self.tiled_map.get_layer_by_name('player').pop()
+        player_pos = glm.vec3(
+            player.x / cfg.TEX_SIZE,
+            cfg.PLAYER_HEIGHT,
+            player.y / cfg.TEX_SIZE
+        )
+        self.eng.player.position = player_pos
+
         walls = self.tiled_map.get_layer_by_name('walls')
 
         for ix in range(self.width):
