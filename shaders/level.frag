@@ -18,5 +18,9 @@ void main() {
     tex_col *= shading;
     tex_col = pow(tex_col, inv_gamma);
 
+    // fog ie. distance shadows
+    float fog_dist = gl_FragCoord.z / gl_FragCoord.w;
+    tex_col = mix(tex_col, vec3(0.05), (1.0 - exp2(-0.015 * fog_dist * fog_dist)));
+
     frag_colour = vec4(tex_col, 1.0);
 }
