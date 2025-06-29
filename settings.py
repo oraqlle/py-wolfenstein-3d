@@ -17,6 +17,7 @@ BG_COLOUR = glm.vec3(0.1, 0.16, 0.25)
 # textures
 TEX_SIZE = 256
 TEXTURE_UNIT_0 = 0
+NUM_TEXTURES = len(ID)
 
 # Camera
 ASPECT_RATIO = WIN_RES.x / WIN_RES.y
@@ -34,6 +35,12 @@ PLAYER_ROT_SPEED = 0.003
 PLAYER_HEIGHT = 0.6
 PLAYER_POS = glm.vec3(1.5, PLAYER_HEIGHT, 1.5)
 MOUSE_SENSITIVITY = 0.0015
+
+# player stats
+PLAYER_INIT_HEALTH = 80
+PLAYER_MAX_AMMO = 25
+PLAYER_MAX_HEALTH = 100
+PLAYER_MAX_AMMO = 999
 
 # control keys
 KEYS = {
@@ -78,4 +85,79 @@ ITEM_SETTINGS = {
     ID.KEY: {
         'scale': 0.9
     }
+}
+
+# hud object settings
+ID.HEALTH_DIGIT_0 = 0 + NUM_TEXTURES
+ID.HEALTH_DIGIT_1 = 1 + NUM_TEXTURES
+ID.HEALTH_DIGIT_2 = 2 + NUM_TEXTURES
+ID.AMMO_DIGIT_0 = 3 + NUM_TEXTURES
+ID.AMMO_DIGIT_1 = 4 + NUM_TEXTURES
+ID.AMMO_DIGIT_2 = 5 + NUM_TEXTURES
+ID.FPS_DIGIT_0 = 6 + NUM_TEXTURES
+ID.FPS_DIGIT_1 = 7 + NUM_TEXTURES
+ID.FPS_DIGIT_2 = 8 + NUM_TEXTURES
+ID.FPS_DIGIT_3 = 9 + NUM_TEXTURES
+
+HUD_SETTINGS = {
+    ID.HEALTH_DIGIT_0: {
+        'scale': 0.1,
+        'pos': glm.vec2(0.85, -0.95),
+    },
+    ID.HEALTH_DIGIT_1: {
+        'scale': 0.1,
+        'pos': glm.vec2(0.90, -0.95),
+    },
+    ID.HEALTH_DIGIT_2: {
+        'scale': 0.1,
+        'pos': glm.vec2(0.95, -0.95),
+    },
+    ID.AMMO_DIGIT_0: {
+        'scale': 0.1,
+        'pos': glm.vec2(-0.95, -0.95),
+    },
+    ID.AMMO_DIGIT_1: {
+        'scale': 0.1,
+        'pos': glm.vec2(-0.90, -0.95),
+    },
+    ID.AMMO_DIGIT_2: {
+        'scale': 0.1,
+        'pos': glm.vec2(-0.85, -0.95),
+    },
+    ID.AMMO: {
+        'scale': 0.25,
+        'pos': glm.vec2(-0.9, -0.82),
+    },
+    ID.MED_KIT: {
+        'scale': 0.25,
+        'pos': glm.vec2(0.9, -0.82),
+    },
+    ID.FPS_DIGIT_0: {
+        'scale': 0.11,
+        'pos': glm.vec2(-0.75, 0.87),
+    },
+    ID.FPS_DIGIT_1: {
+        'scale': 0.11,
+        'pos': glm.vec2(-0.68, 0.87),
+    },
+    ID.FPS_DIGIT_2: {
+        'scale': 0.11,
+        'pos': glm.vec2(-0.61, 0.87),
+    },
+    ID.FPS_DIGIT_3: {
+        'scale': 0.11,
+        'pos': glm.vec2(-0.54, 0.87),
+    },
+    ID.FPS: {
+        'scale': 0.35,
+        'pos': glm.vec2(-0.89, 0.74),
+    },
+    ID.YELLOW_SCREEN: {
+        'scale': 4.0,
+        'pos': glm.vec2(0.0, -2.0),
+    },
+    ID.RED_SCREEN: {
+        'scale': 4.0,
+        'pos': glm.vec2(0.0, -2.0),
+    },
 }

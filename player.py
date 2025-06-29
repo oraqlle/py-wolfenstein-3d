@@ -2,6 +2,8 @@ import glm
 import pygame as pg
 import settings as cfg
 from camera import Camera
+from texture_id import TextureID as ID
+from typing import Tuple
 
 
 class Player(Camera):
@@ -13,6 +15,30 @@ class Player(Camera):
         # these maps will update when instantiated LevelMap
         self.wall_map = None
         self.door_map = None
+        self.item_map = None
+
+        self.ammo = cfg.PLAYER_INIT_AMMO
+        self.health = cfg.PLAYER_INIT_HEALTH
+
+        self.tile_pos: Tuple[int, int] = None
+
+    def update_tile_pos(self):
+        self.tile_pos = int(self.position.x), int(self.position.z)
+
+    def pick_up_item(self):
+        if self.tile_pos not in self.item_map:
+            return None
+
+        item = self.item_map[self.tile_pos]
+
+        if item.tex_id == ID.MED_KIT:
+            self.health += cfg.ITEM_SETTINGS[ID.MED_KIT]['value']
+            self.health = min(self.health, cfg.PLAYER_MAX_HEALTH)
+        elif item.tex_id == ID.AMMO:
+            self.health += cfg.ITEM_SETTINGS[ID.AMMO]['value']
+            self.health = min(self.health, cfg.PLAYER_MAX_AMMO)
+
+        del self.item_map[self.tile_pos]
 
     def handle_events(self, event):
         if event.type == pg.KEYDOWN:
@@ -23,6 +49,8 @@ class Player(Camera):
         self.keyboard_control()
         self.mouse_control()
         super().update()
+
+        self.update_tile_pos()
 
     def mouse_control(self):
         mouse_dx, mouse_dy = pg.mouse.get_rel()

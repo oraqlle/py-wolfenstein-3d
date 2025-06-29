@@ -17,9 +17,15 @@ void main() {
 
     mat4 m_model_view = m_view * m_model;
 
+    // first column
     m_model_view[0][0] = m_model[0][0];
     m_model_view[0][1] = 0.0;
     m_model_view[0][2] = 0.0;
+
+    // second column
+    m_model_view[1][0] = 0.0;
+    m_model_view[1][1] = m_model[1][1];
+    m_model_view[1][2] = 0.0;
 
     gl_Position = m_proj * m_model_view * in_position;
 }
