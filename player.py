@@ -5,7 +5,7 @@ from camera import Camera
 
 
 class Player(Camera):
-    def __init__(self, eng, position=cfg.PLAYER_POS, yaw=-90, pitch=0):
+    def __init__(self, eng, position=cfg.PLAYER_POS, yaw=0, pitch=0):
         self.app = eng.app
         self.eng = eng
         super().__init__(position, yaw, pitch)
