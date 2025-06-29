@@ -2,6 +2,7 @@ import glm
 import pytmx
 import settings as cfg
 from game_objects.door import Door
+from game_objects.item import Item
 
 
 class LevelMap:
@@ -16,6 +17,7 @@ class LevelMap:
         self.wall_map = {}
         self.floor_map = {}
         self.ceiling_map = {}
+        self.item_map = {}
 
         self.door_map = {}
         self.parse_level()
@@ -59,5 +61,12 @@ class LevelMap:
             door = Door(self, tex_id=self.get_id(obj.gid), x=pos[0], z=pos[1])
             self.door_map[pos] = door
 
+        # get items
+        for obj in self.tiled_map.get_layer_by_name('items'):
+            pos = int(obj.x / cfg.TEX_SIZE), int(obj.y / cfg.TEX_SIZE)
+            item = Item(self, tex_id=self.get_id(obj.gid), x=pos[0], z=pos[1])
+            self.item_map[pos] = item
+
         self.eng.player.wall_map = self.wall_map
         self.eng.player.door_map = self.door_map
+        self.eng.player.item_map = self.item_map

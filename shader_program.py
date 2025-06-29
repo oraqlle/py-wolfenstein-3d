@@ -12,6 +12,7 @@ class ShaderProgram:
         # -------- shaders -------- #
         self.level = self.get_program(shader_name='level')
         self.instanced_door = self.get_program(shader_name='instanced_door')
+        self.instanced_item = self.get_program(shader_name='instanced_item')
         # ------------------------- #
 
         self.set_uniform_on_init()
@@ -25,9 +26,14 @@ class ShaderProgram:
         self.instanced_door['m_proj'].write(self.player.m_proj)
         self.instanced_door['u_texture_array_0'] = cfg.TEXTURE_UNIT_0
 
+        # instanced item
+        self.instanced_item['m_proj'].write(self.player.m_proj)
+        self.instanced_item['u_texture_array_0'] = cfg.TEXTURE_UNIT_0
+
     def update(self):
         self.level['m_view'].write(self.player.m_view)
         self.instanced_door['m_view'].write(self.player.m_view)
+        self.instanced_item['m_view'].write(self.player.m_view)
 
     def get_program(self, shader_name: str) -> mgl.Program:
         with open(f'shaders/{shader_name}.vert') as vert:

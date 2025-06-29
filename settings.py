@@ -1,6 +1,7 @@
 import glm
 import math
 import pygame as pg
+from texture_id import TextureID as ID
 
 # OpenGL settings
 MAJOR_VER = 3
@@ -57,3 +58,24 @@ ANIM_DOOR_SPEED = 0.03
 
 # timer
 SYNC_PULSE = 10  # ms
+
+# item settings
+ITEM_SETTINGS = {
+    ID.AMMO: {
+        'scale': 0.2,
+        'value': 8
+    },
+    ID.MED_KIT: {
+        'scale': 0.3,
+        'value': 20
+    },
+    ID.PISTOL_ICON: {
+        'scale': 1.0
+    },
+    ID.RIFLE_ICON: {
+        'scale': 1.0
+    },
+    ID.KEY: {
+        'scale': 0.9
+    }
+}
