@@ -58,3 +58,6 @@ class LevelMap:
             pos = int(obj.x / cfg.TEX_SIZE), int(obj.y / cfg.TEX_SIZE)
             door = Door(self, tex_id=self.get_id(obj.gid), x=pos[0], z=pos[1])
             self.door_map[pos] = door
+
+        self.eng.player.wall_map = self.wall_map
+        self.eng.player.door_map = self.door_map

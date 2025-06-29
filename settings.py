@@ -1,5 +1,6 @@
 import glm
 import math
+import pygame as pg
 
 # OpenGL settings
 MAJOR_VER = 3
@@ -27,10 +28,25 @@ PITCH_MAX = glm.radians(89)
 
 # player
 PLAYER_SPEED = 0.0035
+PLAYER_SIZE = 0.15
 PLAYER_ROT_SPEED = 0.003
 PLAYER_HEIGHT = 0.6
 PLAYER_POS = glm.vec3(1.5, PLAYER_HEIGHT, 1.5)
 MOUSE_SENSITIVITY = 0.0015
+
+# control keys
+KEYS = {
+    'FORWARD': pg.K_w,
+    'BACK': pg.K_s,
+    'UP': pg.K_q,
+    'DOWN': pg.K_e,
+    'STRAFE_L': pg.K_a,
+    'STRAFE_R': pg.K_d,
+    'INTERACT': pg.K_f,
+    'WEAPON_1': pg.K_1,
+    'WEAPON_2': pg.K_2,
+    'WEAPON_3': pg.K_3,
+}
 
 # walls
 WALL_SIZE = 1
