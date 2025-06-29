@@ -31,6 +31,10 @@ class Game:
         self.is_running = True
         self.engine = Engine(self)
 
+        self.anim_trigger = False
+        self.anim_event = pg.USEREVENT + 0
+        pg.time.set_timer(self.anim_event, cfg.SYNC_PULSE)
+
     def update(self):
         self.delta_time = self.clock.tick()
         self.time = pg.time.get_ticks() * 0.001
@@ -44,9 +48,16 @@ class Game:
         pg.display.flip()
 
     def handle_events(self):
+        self.anim_trigger = False
+
         for event in pg.event.get():
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
                 self.is_running = False
+
+            if event.type == self.anim_event:
+                self.anim_trigger = True
+
+            self.engine.handle_events(event)
 
     def run(self):
         while self.is_running:

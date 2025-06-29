@@ -38,11 +38,11 @@ MOUSE_SENSITIVITY = 0.0015
 KEYS = {
     'FORWARD': pg.K_w,
     'BACK': pg.K_s,
-    'UP': pg.K_q,
-    'DOWN': pg.K_e,
+    'UP': pg.K_SPACE,
+    'DOWN': pg.K_LCTRL,
     'STRAFE_L': pg.K_a,
     'STRAFE_R': pg.K_d,
-    'INTERACT': pg.K_f,
+    'INTERACT': pg.K_e,
     'WEAPON_1': pg.K_1,
     'WEAPON_2': pg.K_2,
     'WEAPON_3': pg.K_3,
@@ -51,3 +51,9 @@ KEYS = {
 # walls
 WALL_SIZE = 1
 HALF_WALL_SIZE = WALL_SIZE / 2
+
+# animations
+ANIM_DOOR_SPEED = 0.03
+
+# timer
+SYNC_PULSE = 10  # ms

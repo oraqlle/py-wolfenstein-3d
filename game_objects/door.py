@@ -1,4 +1,5 @@
 import glm
+import settings as cfg
 from game_objects.game_object import GameObject
 
 
@@ -9,8 +10,24 @@ class Door(GameObject):
         self.rot = self.get_rot(x, z)
         self.m_model = self.get_model_matrix()
 
+        self.is_closed = True
+        self.is_moving = False
+
     def update(self):
-        pass
+        if not self.is_moving:
+            return
+
+        if self.is_closed and self.pos.y < cfg.WALL_SIZE - cfg.ANIM_DOOR_SPEED:
+            if self.app.anim_trigger:
+                self.pos.y += cfg.ANIM_DOOR_SPEED
+                self.m_model = self.get_model_matrix()
+        elif not self.is_closed and self.pos.y > 0:
+            if self.app.anim_trigger:
+                self.pos.y -= cfg.ANIM_DOOR_SPEED
+                self.m_model = self.get_model_matrix()
+        else:
+            self.is_moving = False
+            self.is_closed = not self.is_closed
 
     def get_rot(self, x, z):
         wall_map = self.level_map.wall_map

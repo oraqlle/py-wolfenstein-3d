@@ -14,8 +14,10 @@ class Player(Camera):
         self.wall_map = None
         self.door_map = None
 
-    def handle_events(self, events):
-        pass
+    def handle_events(self, event):
+        if event.type == pg.KEYDOWN:
+            if event.key == cfg.KEYS['INTERACT']:
+                self.interact_with_door()
 
     def update(self):
         self.keyboard_control()
@@ -68,7 +70,10 @@ class Player(Camera):
             int(self.position.z + dz + self.collide_range(dz))
         )
 
-        return (int_pos in self.wall_map) or (int_pos in self.door_map)
+        if int_pos in self.door_map:
+            return self.door_map[int_pos].is_closed
+
+        return int_pos in self.wall_map
 
     def collide_range(self, delta):
         if delta > 0:
@@ -78,3 +83,10 @@ class Player(Camera):
         else:
             return 0
 
+    def interact_with_door(self):
+        pos = self.position + self.forward
+        int_pos = int(pos.x), int(pos.z)
+
+        if int_pos in self.door_map:
+            door = self.door_map[int_pos]
+            door.is_moving = True
