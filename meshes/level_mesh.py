@@ -7,10 +7,16 @@ class LevelMesh:
         self.ctx = self.eng.ctx
         self.program = self.eng.shader_program.level
 
-        self.vbo_format = '3u2 1u2 1u2'
+        self.vbo_format = '3u2 1u2 1u2 1u2 1u2'
         self.fmt_size = sum(int(fmt[:1]) for fmt in self.vbo_format.split())
 
-        self.vbo_attrs = ('in_position', 'in_tex_id', 'face_id')
+        self.vbo_attrs = (
+            'in_position',
+            'in_tex_id',
+            'face_id',
+            'ao_id',
+            'flip_id'
+        )
 
         self.mesh_builder = LevelMeshBuilder(self)
         self.vao = self.get_vao()
