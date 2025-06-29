@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="16" height="9" tilewidth="256" tileheight="256" infinite="0" nextlayerid="5" nextobjectid="6">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="16" height="9" tilewidth="256" tileheight="256" infinite="0" nextlayerid="6" nextobjectid="10">
  <tileset firstgid="1" source="wolf-3d-tex.tsx"/>
- <layer id="4" name="floors" width="16" height="9" visible="0" opacity="0.92">
+ <layer id="4" name="floors" width="16" height="9" opacity="0.92">
   <data encoding="csv">
 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
 5,5,5,5,5,8,5,5,5,5,8,5,5,5,5,5,
-5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+5,5,8,5,5,5,5,5,5,5,5,5,5,5,5,5,
 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5
 </data>
  </layer>
- <layer id="3" name="ceilings" width="16" height="9">
+ <layer id="3" name="ceilings" width="16" height="9" visible="0">
   <data encoding="csv">
 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
@@ -27,14 +27,14 @@
 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5
 </data>
  </layer>
- <layer id="1" name="walls" width="16" height="9" visible="0">
+ <layer id="1" name="walls" width="16" height="9">
   <data encoding="csv">
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,
 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,
 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,
 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,
+1,1,0,1,1,1,0,0,0,0,1,0,0,0,0,1,
 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,
 1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1,
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
@@ -44,5 +44,10 @@
   <object id="2" name="player" x="313.686" y="1166.91" width="129.783" height="0.749158">
    <text wrap="1">Hello World</text>
   </object>
+ </objectgroup>
+ <objectgroup id="5" name="doors">
+  <object id="6" gid="7" x="512" y="1536" width="256" height="256"/>
+  <object id="7" gid="7" x="1284" y="1284" width="256" height="256"/>
+  <object id="9" gid="7" x="2560" y="1280" width="256" height="256"/>
  </objectgroup>
 </map>
