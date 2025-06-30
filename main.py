@@ -29,6 +29,7 @@ class Game:
         pg.event.set_grab(True)
 
         self.is_running = True
+        self.fps_value = 0
         self.engine = Engine(self)
 
         self.anim_trigger = False
@@ -38,7 +39,8 @@ class Game:
     def update(self):
         self.delta_time = self.clock.tick()
         self.time = pg.time.get_ticks() * 0.001
-        pg.display.set_caption(f'{self.clock.get_fps():.0f}')
+        self.fps_value = int(self.clock.get_fps())
+        pg.display.set_caption(f'{self.fps_value}')
 
         self.engine.update()
 
