@@ -35,8 +35,8 @@ class Player(Camera):
             self.health += cfg.ITEM_SETTINGS[ID.MED_KIT]['value']
             self.health = min(self.health, cfg.PLAYER_MAX_HEALTH)
         elif item.tex_id == ID.AMMO:
-            self.health += cfg.ITEM_SETTINGS[ID.AMMO]['value']
-            self.health = min(self.health, cfg.PLAYER_MAX_AMMO)
+            self.ammo += cfg.ITEM_SETTINGS[ID.AMMO]['value']
+            self.ammo = min(self.ammo, cfg.PLAYER_MAX_AMMO)
 
         del self.item_map[self.tile_pos]
 
@@ -51,6 +51,7 @@ class Player(Camera):
         super().update()
 
         self.update_tile_pos()
+        self.pick_up_item()
 
     def mouse_control(self):
         mouse_dx, mouse_dy = pg.mouse.get_rel()

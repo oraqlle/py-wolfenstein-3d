@@ -39,7 +39,7 @@ class Game:
     def update(self):
         self.delta_time = self.clock.tick()
         self.time = pg.time.get_ticks() * 0.001
-        self.fps_value = int(self.clock.get_fps())
+        self.fps_value = int(min(self.clock.get_fps(), float('inf')))
         pg.display.set_caption(f'{self.fps_value}')
 
         self.engine.update()
