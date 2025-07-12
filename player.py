@@ -125,7 +125,7 @@ class Player(Camera):
             self.weapon_instance.weapon_id = weapon_id
 
     def shoot(self):
-        if self.weapon_id == ID.KNIFE_0:
+        if self.weapon_id == ID.KNIFE_0 and not self.is_shooting:
             self.is_shooting = True
             self.check_npc_hit()
             self.play(self.sound.player_attack[ID.KNIFE_0])
