@@ -3,6 +3,7 @@ import pytmx
 import settings as cfg
 from game_objects.door import Door
 from game_objects.item import Item
+from game_objects.npc import NPC
 
 
 class LevelMap:
@@ -20,6 +21,10 @@ class LevelMap:
         self.item_map = {}
 
         self.door_map = {}
+
+        self.npc_map = {}
+        self.npc_list = []
+
         self.parse_level()
 
     def get_id(self, gid):
@@ -38,6 +43,8 @@ class LevelMap:
         walls = self.tiled_map.get_layer_by_name('walls')
         floors = self.tiled_map.get_layer_by_name('floors')
         ceilings = self.tiled_map.get_layer_by_name('ceilings')
+        items = self.tiled_map.get_layer_by_name('items')
+        npcs = self.tiled_map.get_layer_by_name('npcs')
 
         for ix in range(self.width):
             for iz in range(self.depth):
@@ -62,10 +69,17 @@ class LevelMap:
             self.door_map[pos] = door
 
         # get items
-        for obj in self.tiled_map.get_layer_by_name('items'):
+        for obj in items:
             pos = int(obj.x / cfg.TEX_SIZE), int(obj.y / cfg.TEX_SIZE)
             item = Item(self, tex_id=self.get_id(obj.gid), x=pos[0], z=pos[1])
             self.item_map[pos] = item
+
+        # get npc
+        for obj in npcs:
+            pos = int(obj.x / cfg.TEX_SIZE), int(obj.y / cfg.TEX_SIZE)
+            npc = NPC(self, tex_id=self.get_id(obj.gid), x=pos[0], z=pos[1])
+            self.npc_map[pos] = npc
+            self.npc_list.append(npc)
 
         self.eng.player.wall_map = self.wall_map
         self.eng.player.door_map = self.door_map

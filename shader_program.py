@@ -12,7 +12,7 @@ class ShaderProgram:
         # -------- shaders -------- #
         self.level = self.get_program(shader_name='level')
         self.instanced_door = self.get_program(shader_name='instanced_door')
-        self.instanced_item = self.get_program(shader_name='instanced_item')
+        self.instanced_billboard = self.get_program(shader_name='instanced_billboard')
         self.instanced_hud = self.get_program(shader_name='instanced_hud')
         self.weapon = self.get_program(shader_name='weapon')
         # ------------------------- #
@@ -29,8 +29,8 @@ class ShaderProgram:
         self.instanced_door['u_texture_array_0'] = cfg.TEXTURE_UNIT_0
 
         # instanced item
-        self.instanced_item['m_proj'].write(self.player.m_proj)
-        self.instanced_item['u_texture_array_0'] = cfg.TEXTURE_UNIT_0
+        self.instanced_billboard['m_proj'].write(self.player.m_proj)
+        self.instanced_billboard['u_texture_array_0'] = cfg.TEXTURE_UNIT_0
 
         # instanced HUD object
         self.instanced_hud['u_texture_array_0'] = cfg.TEXTURE_UNIT_0
@@ -41,7 +41,7 @@ class ShaderProgram:
     def update(self):
         self.level['m_view'].write(self.player.m_view)
         self.instanced_door['m_view'].write(self.player.m_view)
-        self.instanced_item['m_view'].write(self.player.m_view)
+        self.instanced_billboard['m_view'].write(self.player.m_view)
 
     def get_program(self, shader_name: str) -> mgl.Program:
         with open(f'shaders/{shader_name}.vert') as vert:

@@ -22,7 +22,15 @@ class Scene:
         self.instanced_item_mesh = InstancedQuadMesh(
             self.eng,
             self.items,
-            self.eng.shader_program.instanced_item
+            self.eng.shader_program.instanced_billboard
+        )
+
+        # npc objects
+        self.npcs = self.eng.level_map.npc_map.values()
+        self.instanced_npcs_mesh = InstancedQuadMesh(
+            self.eng,
+            self.npcs,
+            self.eng.shader_program.instanced_billboard
         )
 
         # objects objects and mesh
@@ -51,6 +59,9 @@ class Scene:
         for item in self.items:
             item.update()
 
+        for npc in self.npcs:
+            npc.update()
+
         self.hud.update()
         self.weapon.update()
 
@@ -58,5 +69,6 @@ class Scene:
         self.level_mesh.render()
         self.instanced_door_mesh.render()
         self.instanced_item_mesh.render()
+        self.instanced_npcs_mesh.render()
         self.instanced_hud_mesh.render()
         self.waepon_mesh.render()

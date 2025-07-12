@@ -191,3 +191,70 @@ WEAPON_SETTINGS = {
         'miss_probability': 0.045
     },
 }
+
+# npc settings
+NPC_SETTINGS = {
+    #
+    ID.SOLDIER_BROWN_0: {
+        'scale': glm.vec3(1.00),
+        'anim_periods': 9,
+        'num_frames': {
+            'walk': 4, 'attack': 2, 'hurt': 2, 'death': 5
+        },
+        'state_tex_id': {
+            'walk': ID.SOLDIER_BROWN_0,
+            'attack': ID.SOLDIER_BROWN_0 + 4,
+            'hurt': ID.SOLDIER_BROWN_0 + 6,
+            'death': ID.SOLDIER_BROWN_0 + 6,
+        },
+        'attack_dist': 3,
+        'health': 100,
+        'speed': 0.004,
+        'size': 0.3,
+        'damage': 5,
+        'hit_probability': 0.001,
+        'drop_item': ID.AMMO
+    },
+    #
+    ID.SOLDIER_BLUE_0: {
+        'scale': glm.vec3(0.85),
+        'anim_periods': 9,
+        'num_frames': {
+            'walk': 4, 'attack': 2, 'hurt': 2, 'death': 5
+        },
+        'state_tex_id': {
+            'walk': ID.SOLDIER_BLUE_0,
+            'attack': ID.SOLDIER_BLUE_0 + 4,
+            'hurt': ID.SOLDIER_BLUE_0 + 6,
+            'death': ID.SOLDIER_BLUE_0 + 6,
+        },
+        'attack_dist': 4,
+        'health': 300,
+        'speed': 0.0045,
+        'size': 0.3,
+        'damage': 7,
+        'hit_probability': 0.0015,
+        'drop_item': ID.AMMO
+    },
+    #
+    ID.RAT_0: {
+        'scale': glm.vec3(1.0),
+        'anim_periods': 12,
+        'num_frames': {
+            'walk': 4, 'attack': 3, 'hurt': 2, 'death': 5
+        },
+        'state_tex_id': {
+            'walk': ID.RAT_0,
+            'attack': ID.RAT_0 + 4,
+            'hurt': ID.RAT_0 + 7,
+            'death': ID.RAT_0 + 7,
+        },
+        'attack_dist': 0.6,
+        'health': 30,
+        'speed': 0.0045,
+        'size': 0.2,
+        'damage': 2,
+        'hit_probability': 0.002,
+        'drop_item': None
+    },
+}
