@@ -44,6 +44,7 @@ class NPC(GameObject):
         self.sound = self.eng.sound
 
         self.m_model = self.get_model_matrix()
+        self.update_tile_position()
 
     def update(self):
         if self.is_hurt:
