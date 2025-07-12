@@ -58,8 +58,10 @@
  </objectgroup>
  <objectgroup id="8" name="npcs">
   <object id="16" gid="46" x="1788" y="1280" width="256" height="256"/>
-  <object id="17" gid="46" x="2056" y="2036" width="256" height="256"/>
+  <object id="17" gid="46" x="2052" y="1972" width="256" height="256"/>
+  <object id="18" gid="57" x="3116" y="764" width="256" height="256"/>
+  <object id="20" gid="46" x="3068" y="1784" width="256" height="256"/>
   <object id="21" gid="68" x="520" y="2040" width="256" height="256"/>
-  <object id="22" gid="68" x="1016" y="1788" width="256" height="256"/>
+  <object id="22" gid="68" x="956" y="1832" width="256" height="256"/>
  </objectgroup>
 </map>

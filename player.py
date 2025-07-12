@@ -1,6 +1,7 @@
 import glm
 import pygame as pg
 import settings as cfg
+import random as rnd
 from camera import Camera
 from texture_id import TextureID as ID
 from typing import Tuple
@@ -51,6 +52,19 @@ class Player(Camera):
 
     def update_tile_pos(self):
         self.tile_pos = int(self.position.x), int(self.position.z)
+
+    def check_npc_hit(self):
+        if cfg.WEAPON_SETTINGS[self.weapon_id]['miss_probability'] > rnd.random():
+            return None
+
+        if npc_pos := self.eng.ray_casting.run(
+            start_pos=self.position,
+            dir=self.forward,
+            max_dist=cfg.WEAPON_SETTINGS[self.weapon_id]['max_dist'],
+            npc_to_player_flag=False
+        ):
+            npc = self.eng.level_map.npc_map[npc_pos]
+            npc.take_damage()
 
     def pick_up_item(self):
         if self.tile_pos not in self.item_map:
@@ -109,12 +123,14 @@ class Player(Camera):
     def shoot(self):
         if self.weapon_id == ID.KNIFE_0:
             self.is_shooting = True
+            self.check_npc_hit()
             self.play(self.sound.player_attack[ID.KNIFE_0])
         elif self.ammo:
             consumption = cfg.WEAPON_SETTINGS[self.weapon_id]['ammo_consumption']
 
             if not self.is_shooting and self.ammo >= consumption:
                 self.is_shooting = True
+                self.check_npc_hit()
                 self.ammo -= consumption
                 self.ammo = max(0, self.ammo)
                 self.play(self.sound.player_attack[self.weapon_id])

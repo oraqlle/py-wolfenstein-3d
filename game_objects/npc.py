@@ -21,7 +21,7 @@ class NPC(GameObject):
         self.health = cfg.NPC_SETTINGS[self.npc_id]['health']
         self.damage = cfg.NPC_SETTINGS[self.npc_id]['damage']
         self.hit_probability = cfg.NPC_SETTINGS[self.npc_id]['hit_probability']
-        self.drop_item = cfg.NPC_SETTINGS[self.npc_id]['drop_item']
+        self.item_to_drop = cfg.NPC_SETTINGS[self.npc_id]['drop_item']
 
         self.anim_periods = cfg.NPC_SETTINGS[self.npc_id]['anim_periods']
         self.anim_counter = 0
@@ -164,3 +164,20 @@ class NPC(GameObject):
         if self.anim_counter == self.anim_periods:
             self.anim_counter = 0
             self.frame = (self.frame + 1) % self.num_frames
+
+            if self.is_hurt:
+                self.is_hurt = False
+
+            elif not self.is_alive and self.frame == self.num_frames - 1:
+                self.is_animated = False
+                self.drop_item()
+                self.play(self.eng.sound.death[self.npc_id])
+
+    def drop_item(self):
+        if self.item_to_drop is not None:
+            self.level_map.item_map[self.tile_pos] = Item(
+                self.level_map,
+                self.item_to_drop,
+                x=self.tile_pos[0],
+                z=self.tile_pos[1]
+            )
