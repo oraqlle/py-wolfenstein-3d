@@ -18,6 +18,9 @@ class Sound:
         }
 
         self.open_door = self.load('p_open_door.wav', volume=1.0)
+        self.player_hurt = self.load('p_hurt.ogg')
+        self.player_death = self.load('p_death.ogg')
+        self.player_missed = self.load('p_missed.wav')
 
         self.pick_up = {
             ID.AMMO: self.load('p_ammo.ogg'),
@@ -27,6 +30,22 @@ class Sound:
 
         self.pick_up[ID.PISTOL_ICON] = self.pick_up[ID.AMMO]
         self.pick_up[ID.RIFLE_ICON] = self.pick_up[ID.AMMO]
+
+        self.enemy_attack = {
+            ID.SOLDIER_BLUE_0: self.load('n_soldier_attack.mp3', volume=0.8),
+            ID.SOLDIER_BROWN_0: self.load('n_soldier_attack.mp3', volume=0.8),
+            ID.RAT_0: self.load('n_rat_attack.ogg', volume=0.2),
+        }
+        self.spotted = {
+            ID.SOLDIER_BLUE_0: self.load('n_soldier_spotted.ogg', volume=1.0),
+            ID.SOLDIER_BROWN_0: self.load('n_brown_spotted.ogg', volume=0.8),
+            ID.RAT_0: self.load('n_rat_spotted.ogg', volume=0.5),
+        }
+        self.death = {
+            ID.SOLDIER_BLUE_0: self.load('n_blue_death.ogg', volume=0.8),
+            ID.SOLDIER_BROWN_0: self.load('n_brown_death.ogg', volume=0.8),
+            ID.RAT_0: self.load('no_sound.mp3', volume=0.0),
+        }
 
         pg.mixer.music.load(self.path + 'theme.ogg')
         pg.mixer.music.set_volume(0.1)

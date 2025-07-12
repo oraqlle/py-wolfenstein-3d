@@ -63,6 +63,9 @@ HALF_WALL_SIZE = WALL_SIZE / 2
 # sound
 MAX_SOUND_CHANNELS = 10
 
+# ray casting
+MAX_RAY_DIST = 20
+
 # animations
 ANIM_DOOR_SPEED = 0.03
 
