@@ -224,16 +224,17 @@ class Player(Camera):
 
         door = self.door_map[int_pos]
 
-        if self.key and door.tex_id == ID.KEY_DOOR:
-            door.is_closed = not door.is_closed
-            self.play(self.sound.player_missed)
-            # next level
-            pg.time.wait(300)
+        if door.tex_id == ID.KEY_DOOR:
+            if self.key:
+                door.is_closed = not door.is_closed
+                self.play(self.sound.player_missed)
+                # next level
+                pg.time.wait(300)
 
-            self.eng.player_attribs.update(player=self)
-            self.eng.player_attribs.num_level += 1
-            self.eng.player_attribs.num_level %= cfg.NUM_LEVELS
-            self.eng.new_game()
+                self.eng.player_attribs.update(player=self)
+                self.eng.player_attribs.num_level += 1
+                self.eng.player_attribs.num_level %= cfg.NUM_LEVELS
+                self.eng.new_game()
         else:
             door.is_moving = True
             self.play(self.sound.open_door)
