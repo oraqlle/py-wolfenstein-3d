@@ -73,7 +73,7 @@ class NPC(GameObject):
 
         dir_to_player = glm.normalize(self.player.position - self.pos)
 
-        if self.eng.ray_casting.run(self.pos, dir_to_player):
+        if self.eng.ray_casting.run(start_pos=self.pos, dir=dir_to_player):
             self.set_state(state='attack')
 
             if self.app.sound_trigger:
@@ -87,18 +87,22 @@ class NPC(GameObject):
 
     def take_damage(self):
         self.health -= cfg.WEAPON_SETTINGS[self.player.weapon_id]['damage']
-        self.is_hurt = True
+
+        if self.is_alive:
+            self.is_hurt = True
 
         if not self.is_player_spotted:
             self.is_player_spotted = True
 
     def ray_to_player(self):
-        if not self.is_player_spotted:
-            dir_to_player = glm.normalize(self.player.position - self.pos)
+        if self.is_player_spotted:
+            return None
 
-            if self.eng.ray_casting.run(self.pos, dir_to_player):
-                self.is_player_spotted = True
-                self.play(self.sound.spotted[self.npc_id])
+        dir_to_player = glm.normalize(self.player.position - self.pos)
+
+        if self.eng.ray_casting.run(self.pos, dir_to_player):
+            self.is_player_spotted = True
+            self.play(self.sound.spotted[self.npc_id])
 
     def get_path_to_player(self):
         if not self.is_player_spotted:
@@ -121,31 +125,31 @@ class NPC(GameObject):
         delta_vec = dir_vec * self.speed * self.app.delta_time
 
         # collisions
-        if not self.check_collision(dx=delta_vec.x):
-            self.pos.x += delta_vec.x
-        if not self.check_collision(dz=delta_vec.y):
-            self.pos.z += delta_vec.y
+        if not self.check_collision(dx=delta_vec[0]):
+            self.pos.x += delta_vec[0]
+        if not self.check_collision(dz=delta_vec[1]):
+            self.pos.z += delta_vec[1]
 
         # open doors
         door_map = self.level_map.door_map
         if self.tile_pos in door_map:
             door = door_map[self.tile_pos]
-            if door.is_closed:
+            if door.is_closed and not door.is_moving:
                 door.is_moving = True
+                self.play(self.sound.open_door)
 
         # translate
         self.m_model = self.get_model_matrix()
 
     def check_collision(self, dx=0, dz=0):
         int_pos = (
-            int(self.pos.x + dx + (self.size if dx >
-                0 else -self.size if dx < 0 else 0)),
-            int(self.pos.z + dz + (self.size if dz >
-                0 else -self.size if dz < 0 else 0))
+            int(self.pos.x + dx + (self.size if dx > 0 else -self.size if dx < 0 else 0)),
+            int(self.pos.z + dz + (self.size if dz > 0 else -self.size if dz < 0 else 0))
         )
 
         return (int_pos in self.level_map.wall_map or
-                int_pos in (self.level_map.npc_map.keys() - {self.tile_pos}))
+                int_pos in (self.level_map.npc_map.keys() - {self.tile_pos}) or
+                int_pos in self.player.tile_pos)
 
     def update_tile_position(self):
         self.tile_pos = int(self.pos.x), int(self.pos.z)

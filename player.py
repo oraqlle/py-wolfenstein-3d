@@ -58,10 +58,10 @@ class Player(Camera):
             return None
 
         if npc_pos := self.eng.ray_casting.run(
-            start_pos=self.position,
-            dir=self.forward,
-            max_dist=cfg.WEAPON_SETTINGS[self.weapon_id]['max_dist'],
-            npc_to_player_flag=False
+                start_pos=self.position,
+                dir=self.forward,
+                max_dist=cfg.WEAPON_SETTINGS[self.weapon_id]['max_dist'],
+                npc_to_player_flag=False
         ):
             npc = self.eng.level_map.npc_map[npc_pos]
             npc.take_damage()

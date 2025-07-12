@@ -43,7 +43,7 @@ class Scene:
 
         # weapon objects and 'HUD' meshes
         self.weapon = Weapon(eng)
-        self.waepon_mesh = WeaponMesh(
+        self.weapon_mesh = WeaponMesh(
                 eng,
                 self.weapon,
                 self.eng.shader_program.weapon
@@ -71,4 +71,4 @@ class Scene:
         self.instanced_item_mesh.render()
         self.instanced_npcs_mesh.render()
         self.instanced_hud_mesh.render()
-        self.waepon_mesh.render()
+        self.weapon_mesh.render()

@@ -54,14 +54,13 @@
   <object id="11" gid="13" x="1024" y="720" width="256" height="256"/>
   <object id="12" gid="14" x="256" y="728" width="256" height="256"/>
   <object id="13" gid="16" x="259.03" y="2045.47" width="256" height="256"/>
-  <object id="15" gid="15" x="1028" y="2056" width="256" height="256"/>
+  <object id="15" gid="15" x="648" y="752" width="256" height="256"/>
  </objectgroup>
  <objectgroup id="8" name="npcs">
   <object id="16" gid="46" x="1788" y="1280" width="256" height="256"/>
-  <object id="17" gid="46" x="2052" y="1972" width="256" height="256"/>
+  <object id="17" gid="46" x="2084" y="1876" width="256" height="256"/>
   <object id="18" gid="57" x="3116" y="764" width="256" height="256"/>
   <object id="20" gid="46" x="3068" y="1784" width="256" height="256"/>
   <object id="21" gid="68" x="520" y="2040" width="256" height="256"/>
-  <object id="22" gid="68" x="956" y="1832" width="256" height="256"/>
  </objectgroup>
 </map>

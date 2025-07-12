@@ -22,9 +22,9 @@ class RayCasting:
         x2, y2, z2 = start_pos + dir * max_dist
         cur_voxel_pos = glm.ivec3(x1, y1, z1)
 
-        dx, delta_x, max_x = RayCasting.get_init_data(x1, x2)
-        dy, delta_y, max_y = RayCasting.get_init_data(y1, y2)
-        dz, delta_z, max_z = RayCasting.get_init_data(z1, z2)
+        dx, delta_x, max_x = self.get_init_data(x1, x2)
+        dy, delta_y, max_y = self.get_init_data(y1, y2)
+        dz, delta_z, max_z = self.get_init_data(z1, z2)
 
         while not (max_x > 1.0 and max_y > 1.0 and max_z > 1.0):
             cur_tile_pos = (cur_voxel_pos.x, cur_voxel_pos.z)

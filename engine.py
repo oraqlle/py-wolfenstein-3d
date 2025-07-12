@@ -43,8 +43,7 @@ class Engine:
     def update_npc_map(self):
         new_npc_map = {}
 
-        for idx in range(len(self.level_map.npc_list)):
-            npc = self.level_map.npc_list[idx]
+        for npc in self.level_map.npc_list:
             if npc.is_alive:
                 new_npc_map[npc.tile_pos] = npc
             else:
