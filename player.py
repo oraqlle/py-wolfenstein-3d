@@ -4,6 +4,7 @@ import settings as cfg
 from camera import Camera
 from texture_id import TextureID as ID
 from typing import Tuple
+from itertools import cycle
 
 
 class Player(Camera):
@@ -22,6 +23,16 @@ class Player(Camera):
 
         self.tile_pos: Tuple[int, int] = None
 
+        # weapons
+        self.is_shooting = False
+        self.weapons = {
+            ID.KNIFE_0: 1,
+            ID.PISTOL_0: 0,
+            ID.RIFLE_0: 0
+        }
+        self.weapon_cycle = cycle(self.weapons.keys())
+        self.weapon_id = ID.KNIFE_0
+
     def update_tile_pos(self):
         self.tile_pos = int(self.position.x), int(self.position.z)
 
@@ -37,6 +48,14 @@ class Player(Camera):
         elif item.tex_id == ID.AMMO:
             self.ammo += cfg.ITEM_SETTINGS[ID.AMMO]['value']
             self.ammo = min(self.ammo, cfg.PLAYER_MAX_AMMO)
+        elif item.tex_id == ID.PISTOL_ICON:
+            if not self.weapons[ID.PISTOL_0]:
+                self.weapons[ID.PISTOL_0] = 1
+                self.switch_weapon(ID.PISTOL_0)
+        elif item.tex_id == ID.RIFLE_ICON:
+            if not self.weapons[ID.RIFLE_0]:
+                self.weapons[ID.RIFLE_0] = 1
+                self.switch_weapon(ID.RIFLE_0)
 
         del self.item_map[self.tile_pos]
 
@@ -44,6 +63,41 @@ class Player(Camera):
         if event.type == pg.KEYDOWN:
             if event.key == cfg.KEYS['INTERACT']:
                 self.interact_with_door()
+
+            # weapon hotkeys
+            if event.key == cfg.KEYS['WEAPON_1']:
+                self.switch_weapon(weapon_id=ID.KNIFE_0)
+            elif event.key == cfg.KEYS['WEAPON_2']:
+                self.switch_weapon(weapon_id=ID.PISTOL_0)
+            elif event.key == cfg.KEYS['WEAPON_3']:
+                self.switch_weapon(weapon_id=ID.RIFLE_0)
+
+        # weapon cycling
+        if event.type == pg.MOUSEWHEEL:
+            self.weapon_id = next(self.weapon_cycle)
+            if self.weapons[self.weapon_id]:
+                self.switch_weapon(weapon_id=self.weapon_id)
+
+        # shoot
+        if event.type == pg.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                self.shoot()
+
+    def switch_weapon(self, weapon_id):
+        if self.weapons[self.weapon_id]:
+            self.weapon_id = weapon_id
+            self.weapon_instance.weapon_id = weapon_id
+
+    def shoot(self):
+        if self.weapon_id == ID.KNIFE_0:
+            self.is_shooting = True
+        elif self.ammo:
+            consumption = cfg.WEAPON_SETTINGS[self.weapon_id]['ammo_consumption']
+
+            if not self.is_shooting and self.ammo >= consumption:
+                self.is_shooting = True
+                self.ammo -= consumption
+                self.ammo = max(0, self.ammo)
 
     def update(self):
         self.keyboard_control()

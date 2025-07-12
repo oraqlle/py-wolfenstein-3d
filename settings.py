@@ -161,3 +161,30 @@ HUD_SETTINGS = {
         'pos': glm.vec2(0.0, -2.0),
     },
 }
+
+# weapon settings
+WEAPON_SCALE = 1.9
+WEAPON_NUM_FRAMES = 5
+WEAPON_POS = glm.vec3(0.0, -1.0, 0.0)
+WEAPON_ANIM_PERIODS = 4
+
+WEAPON_SETTINGS = {
+    ID.KNIFE_0: {
+        'ammo_consumption': 0,
+        'damage': 8,
+        'max_dist': 2,
+        'miss_probability': 0.3
+    },
+    ID.PISTOL_0: {
+        'ammo_consumption': 1,
+        'damage': 20,
+        'max_dist': 10,
+        'miss_probability': 0.1
+    },
+    ID.RIFLE_0: {
+        'ammo_consumption': 2,
+        'damage': 41,
+        'max_dist': 30,
+        'miss_probability': 0.045
+    },
+}

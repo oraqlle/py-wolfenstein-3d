@@ -14,6 +14,7 @@ class ShaderProgram:
         self.instanced_door = self.get_program(shader_name='instanced_door')
         self.instanced_item = self.get_program(shader_name='instanced_item')
         self.instanced_hud = self.get_program(shader_name='instanced_hud')
+        self.weapon = self.get_program(shader_name='weapon')
         # ------------------------- #
 
         self.set_uniform_on_init()
@@ -33,6 +34,9 @@ class ShaderProgram:
 
         # instanced HUD object
         self.instanced_hud['u_texture_array_0'] = cfg.TEXTURE_UNIT_0
+
+        # weapons
+        self.weapon['u_texture_array_0'] = cfg.TEXTURE_UNIT_0
 
     def update(self):
         self.level['m_view'].write(self.player.m_view)

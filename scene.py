@@ -1,6 +1,8 @@
 from game_objects.hud import HUD
 from meshes.level_mesh import LevelMesh
 from meshes.instanced_quad_mesh import InstancedQuadMesh
+from game_objects.weapon import Weapon
+from meshes.weapon_mesh import WeaponMesh
 
 
 class Scene:
@@ -31,6 +33,14 @@ class Scene:
             self.eng.shader_program.instanced_hud
         )
 
+        # weapon objects and 'HUD' meshes
+        self.weapon = Weapon(eng)
+        self.waepon_mesh = WeaponMesh(
+                eng,
+                self.weapon,
+                self.eng.shader_program.weapon
+        )
+
         # level mesh
         self.level_mesh = LevelMesh(self.eng)
 
@@ -42,9 +52,11 @@ class Scene:
             item.update()
 
         self.hud.update()
+        self.weapon.update()
 
     def render(self):
         self.level_mesh.render()
         self.instanced_door_mesh.render()
         self.instanced_item_mesh.render()
         self.instanced_hud_mesh.render()
+        self.waepon_mesh.render()

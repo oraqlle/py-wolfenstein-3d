@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="16" height="9" tilewidth="256" tileheight="256" infinite="0" nextlayerid="7" nextobjectid="13">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="16" height="9" tilewidth="256" tileheight="256" infinite="0" nextlayerid="7" nextobjectid="16">
  <tileset firstgid="1" source="wolf-3d-tex.tsx"/>
  <layer id="4" name="floors" width="16" height="9" opacity="0.92">
   <data encoding="csv">
@@ -53,5 +53,7 @@
  <objectgroup id="6" name="items">
   <object id="11" gid="13" x="1024" y="720" width="256" height="256"/>
   <object id="12" gid="14" x="256" y="728" width="256" height="256"/>
+  <object id="13" gid="16" x="259.03" y="2045.47" width="256" height="256"/>
+  <object id="15" gid="15" x="1028" y="2056" width="256" height="256"/>
  </objectgroup>
 </map>
