@@ -16,11 +16,11 @@ class PlayerAttribs:
         self.weapon_id = ID.KNIFE_0
         self.num_level = 0
 
-    def update(self, player):
+    def update(self, player, death=True):
         self.health = player.health
         self.ammo = player.ammo
         self.weapons = player.weapons
-        self.weapon_id = player.weapon_id
+        self.weapon_id = ID.KNIFE_0 if death else player.weapon_id
 
 
 class Player(Camera):
@@ -86,6 +86,8 @@ class Player(Camera):
             if not self.weapons[ID.RIFLE_0]:
                 self.weapons[ID.RIFLE_0] = 1
                 self.switch_weapon(ID.RIFLE_0)
+        elif item.tex_id == ID.KEY:
+            self.key = 1
 
         self.play(self.sound.pick_up[item.tex_id])
 
@@ -106,9 +108,11 @@ class Player(Camera):
 
         # weapon cycling
         if event.type == pg.MOUSEWHEEL:
-            self.weapon_id = next(self.weapon_cycle)
-            if self.weapons[self.weapon_id]:
-                self.switch_weapon(weapon_id=self.weapon_id)
+            self.weapon_id = next(filter(
+                lambda id: self.weapons[id] == 1,
+                self.weapon_cycle
+            ))
+            self.switch_weapon(weapon_id=self.weapon_id)
 
         # shoot
         if event.type == pg.MOUSEBUTTONDOWN:
@@ -116,7 +120,7 @@ class Player(Camera):
                 self.shoot()
 
     def switch_weapon(self, weapon_id):
-        if self.weapons[self.weapon_id]:
+        if self.weapons[weapon_id] == 1:
             self.weapon_id = weapon_id
             self.weapon_instance.weapon_id = weapon_id
 
@@ -215,8 +219,24 @@ class Player(Camera):
         pos = self.position + self.forward
         int_pos = int(pos.x), int(pos.z)
 
-        if int_pos in self.door_map:
-            door = self.door_map[int_pos]
+        if int_pos not in self.door_map:
+            return None
+
+        door = self.door_map[int_pos]
+
+        if self.key and door.tex_id == ID.KEY_DOOR:
+            door.is_closed = not door.is_closed
+            self.play(self.sound.player_missed)
+            # next level
+            pg.time.wait(300)
+
+            self.eng.player_attribs.update(player=self)
+            self.eng.player_attribs.num_level += 1
+            self.eng.player_attribs.num_level %= cfg.NUM_LEVELS
+            self.eng.new_game()
+        else:
+            door.is_moving = True
+            self.play(self.sound.open_door)
             door.is_moving = True
 
             self.play(self.sound.open_door)

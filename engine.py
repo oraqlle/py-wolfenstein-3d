@@ -32,7 +32,7 @@ class Engine:
         pg.mixer.music.play(-1)
         self.player = Player(self)
         self.shader_program = ShaderProgram(self)
-        self.level_map = LevelMap(self, tmx_file='level_0.tmx')
+        self.level_map = LevelMap(self, tmx_file=f'level_{self.player_attribs.num_level}.tmx')
         self.ray_casting = RayCasting(self)
         self.path_finder = PathFinder(self)
         self.scene = Scene(self)

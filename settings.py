@@ -14,6 +14,8 @@ WIN_RES = glm.vec2(1280, 720)
 # colours
 BG_COLOUR = glm.vec3(0.1, 0.16, 0.25)
 
+NUM_LEVELS = 2
+
 # textures
 TEX_SIZE = 256
 TEXTURE_UNIT_0 = 0
