@@ -36,11 +36,13 @@ class Sound:
             ID.SOLDIER_BROWN_0: self.load('n_soldier_attack.mp3', volume=0.8),
             ID.RAT_0: self.load('n_rat_attack.ogg', volume=0.2),
         }
+
         self.spotted = {
             ID.SOLDIER_BLUE_0: self.load('n_soldier_spotted.ogg', volume=1.0),
             ID.SOLDIER_BROWN_0: self.load('n_brown_spotted.ogg', volume=0.8),
             ID.RAT_0: self.load('n_rat_spotted.ogg', volume=0.5),
         }
+
         self.death = {
             ID.SOLDIER_BLUE_0: self.load('n_blue_death.ogg', volume=0.8),
             ID.SOLDIER_BROWN_0: self.load('n_brown_death.ogg', volume=0.8),

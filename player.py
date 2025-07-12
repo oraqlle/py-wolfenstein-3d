@@ -7,6 +7,21 @@ from typing import Tuple
 from itertools import cycle
 
 
+class PlayerAttribs:
+    def __init__(self):
+        self.health = cfg.PLAYER_INIT_HEALTH
+        self.ammo = cfg.PLAYER_INIT_AMMO
+        self.weapons = {ID.KNIFE_0: 1, ID.PISTOL_0: 0, ID.RIFLE_0: 0}
+        self.weapon_id = ID.KNIFE_0
+        self.num_level = 0
+
+    def update(self, player):
+        self.health = player.health
+        self.ammo = player.ammo
+        self.weapons = player.weapons
+        self.weapon_id = player.weapon_id
+
+
 class Player(Camera):
     def __init__(self, eng, position=cfg.PLAYER_POS, yaw=0, pitch=0):
         self.app = eng.app
@@ -20,20 +35,19 @@ class Player(Camera):
         self.door_map = None
         self.item_map = None
 
-        self.ammo = cfg.PLAYER_INIT_AMMO
-        self.health = cfg.PLAYER_INIT_HEALTH
+        self.ammo = self.eng.player_attribs.ammo
+        self.health = self.eng.player_attribs.health
 
         self.tile_pos: Tuple[int, int] = None
 
         # weapons
+        self.weapons = self.eng.player_attribs.weapons
+        self.weapon_id = self.eng.player_attribs.weapon_id
+        self.weapon_cycle = cycle(self.eng.player_attribs.weapons.keys())
+
         self.is_shooting = False
-        self.weapons = {
-            ID.KNIFE_0: 1,
-            ID.PISTOL_0: 0,
-            ID.RIFLE_0: 0
-        }
-        self.weapon_cycle = cycle(self.weapons.keys())
-        self.weapon_id = ID.KNIFE_0
+
+        self.key = None
 
     def update_tile_pos(self):
         self.tile_pos = int(self.position.x), int(self.position.z)
@@ -110,8 +124,17 @@ class Player(Camera):
         self.mouse_control()
         super().update()
 
+        self.check_health()
         self.update_tile_pos()
         self.pick_up_item()
+
+    def check_health(self):
+        if self.health <= 0:
+            self.play(self.sound.player_death)
+            #
+            pg.time.wait(5000)
+            self.eng.player_attribs = PlayerAttribs()
+            self.eng.new_game()
 
     def mouse_control(self):
         mouse_dx, mouse_dy = pg.mouse.get_rel()

@@ -38,7 +38,7 @@ class Game:
 
         self.sound_trigger = False
         self.sound_event = pg.USEREVENT + 1
-        pg.time.set_timer(self.sound_event, cfg.SYNC_PULSE)
+        pg.time.set_timer(self.sound_event, 750)
 
     def update(self):
         self.delta_time = self.clock.tick()

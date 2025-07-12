@@ -4,7 +4,9 @@ from scene import Scene
 from textures import Textures
 from sound import Sound
 from ray_casting import RayCasting
+from path_finding import PathFinder
 from level_map import LevelMap
+from player import PlayerAttribs
 import pygame as pg
 
 
@@ -21,6 +23,8 @@ class Engine:
 
         self.level_map = None
         self.ray_casting: RayCasting = None
+        self.path_finder: PathFinder = None
+        self.player_attribs = PlayerAttribs()
 
         self.new_game()
 
@@ -30,10 +34,22 @@ class Engine:
         self.shader_program = ShaderProgram(self)
         self.level_map = LevelMap(self, tmx_file='level_0.tmx')
         self.ray_casting = RayCasting(self)
+        self.path_finder = PathFinder(self)
         self.scene = Scene(self)
 
     def handle_events(self, event):
         self.player.handle_events(event)
+
+    def update_npc_map(self):
+        new_npc_map = {}
+
+        for npc in self.level_map.npc_list:
+            if npc.is_alive:
+                new_npc_map[npc.tile_pos] = npc
+            else:
+                self.level_map.npc_list.remove(npc)
+
+        self.level_map.npc_map = new_npc_map
 
     def update(self):
         self.player.update()

@@ -34,6 +34,7 @@ class NPC(GameObject):
         self.set_state(state='walk')
 
         self.is_player_spotted: bool = False
+        self.path_to_player: Tuple[int, int] = None
         self.tile_pos: Tuple[int, int] = None
 
         self.is_alive = True
@@ -45,12 +46,51 @@ class NPC(GameObject):
         self.m_model = self.get_model_matrix()
 
     def update(self):
-        self.update_tile_position()
-        self.ray_to_player()
+        if self.is_hurt:
+            self.set_state(state='hurt')
+        elif self.health > 0:
+            self.update_tile_position()
+            self.ray_to_player()
+            self.get_path_to_player()
+
+            if not self.attack():
+                self.move_to_player()
+        else:
+            self.is_alive = False
+            self.set_state(state='death')
+
         self.animate()
 
         # set current texture
         self.tex_id = self.state_tex_id + self.frame
+
+    def attack(self):
+        if not self.is_player_spotted:
+            return False
+
+        if glm.length(self.player.position.xz - self.pos.xz) > self.attack_dist:
+            return False
+
+        dir_to_player = glm.normalize(self.player.position - self.pos)
+
+        if self.eng.ray_casting.run(self.pos, dir_to_player):
+            self.set_state(state='attack')
+
+            if self.app.sound_trigger:
+                self.play(self.sound.enemy_attack[self.npc_id])
+
+            if rnd.random() < self.hit_probability:
+                self.player.health -= self.damage
+                self.play(self.sound.player_hurt)
+
+            return True
+
+    def take_damage(self):
+        self.health -= cfg.WEAPON_SETTINGS[self.player.weapon_id]['damage']
+        self.is_hurt = True
+
+        if not self.is_player_spotted:
+            self.is_player_spotted = True
 
     def ray_to_player(self):
         if not self.is_player_spotted:
@@ -59,6 +99,53 @@ class NPC(GameObject):
             if self.eng.ray_casting.run(self.pos, dir_to_player):
                 self.is_player_spotted = True
                 self.play(self.sound.spotted[self.npc_id])
+
+    def get_path_to_player(self):
+        if not self.is_player_spotted:
+            return None
+
+        self.path_to_player = self.eng.path_finder.find(
+            start_pos=self.tile_pos,
+            end_pos=self.player.tile_pos
+        )
+
+    def move_to_player(self):
+        if not self.path_to_player:
+            return None
+
+        self.set_state(state='walk')
+
+        dir_vec = glm.normalize(
+            glm.vec2(self.path_to_player) + cfg.HALF_WALL_SIZE - self.pos.xz
+        )
+        delta_vec = dir_vec * self.speed * self.app.delta_time
+
+        # collisions
+        if not self.check_collision(dx=delta_vec.x):
+            self.pos.x += delta_vec.x
+        if not self.check_collision(dz=delta_vec.y):
+            self.pos.z += delta_vec.y
+
+        # open doors
+        door_map = self.level_map.door_map
+        if self.tile_pos in door_map:
+            door = door_map[self.tile_pos]
+            if door.is_closed:
+                door.is_moving = True
+
+        # translate
+        self.m_model = self.get_model_matrix()
+
+    def check_collision(self, dx=0, dz=0):
+        int_pos = (
+            int(self.pos.x + dx + (self.size if dx >
+                0 else -self.size if dx < 0 else 0)),
+            int(self.pos.z + dz + (self.size if dz >
+                0 else -self.size if dz < 0 else 0))
+        )
+
+        return (int_pos in self.level_map.wall_map or
+                int_pos in (self.level_map.npc_map.keys() - {self.tile_pos}))
 
     def update_tile_position(self):
         self.tile_pos = int(self.pos.x), int(self.pos.z)
