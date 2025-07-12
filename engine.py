@@ -2,7 +2,9 @@ from shader_program import ShaderProgram
 from player import Player
 from scene import Scene
 from textures import Textures
+from sound import Sound
 from level_map import LevelMap
+import pygame as pg
 
 
 class Engine:
@@ -10,6 +12,7 @@ class Engine:
         self.app = app
         self.ctx = app.ctx
         self.textures = Textures(self)
+        self.sound = Sound()
 
         self.player = None
         self.shader_program = None
@@ -20,6 +23,7 @@ class Engine:
         self.new_game()
 
     def new_game(self):
+        pg.mixer.music.play(-1)
         self.player = Player(self)
         self.shader_program = ShaderProgram(self)
         self.level_map = LevelMap(self, tmx_file='level_0.tmx')

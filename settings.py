@@ -60,6 +60,9 @@ KEYS = {
 WALL_SIZE = 1
 HALF_WALL_SIZE = WALL_SIZE / 2
 
+# sound
+MAX_SOUND_CHANNELS = 10
+
 # animations
 ANIM_DOOR_SPEED = 0.03
 

@@ -11,6 +11,8 @@ class Player(Camera):
     def __init__(self, eng, position=cfg.PLAYER_POS, yaw=0, pitch=0):
         self.app = eng.app
         self.eng = eng
+        self.sound = eng.sound
+        self.play = self.sound.play
         super().__init__(position, yaw, pitch)
 
         # these maps will update when instantiated LevelMap
@@ -57,6 +59,8 @@ class Player(Camera):
                 self.weapons[ID.RIFLE_0] = 1
                 self.switch_weapon(ID.RIFLE_0)
 
+        self.play(self.sound.pick_up[item.tex_id])
+
         del self.item_map[self.tile_pos]
 
     def handle_events(self, event):
@@ -91,6 +95,7 @@ class Player(Camera):
     def shoot(self):
         if self.weapon_id == ID.KNIFE_0:
             self.is_shooting = True
+            self.play(self.sound.player_attack[ID.KNIFE_0])
         elif self.ammo:
             consumption = cfg.WEAPON_SETTINGS[self.weapon_id]['ammo_consumption']
 
@@ -98,6 +103,7 @@ class Player(Camera):
                 self.is_shooting = True
                 self.ammo -= consumption
                 self.ammo = max(0, self.ammo)
+                self.play(self.sound.player_attack[self.weapon_id])
 
     def update(self):
         self.keyboard_control()
@@ -173,3 +179,5 @@ class Player(Camera):
         if int_pos in self.door_map:
             door = self.door_map[int_pos]
             door.is_moving = True
+
+            self.play(self.sound.open_door)
